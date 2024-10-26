@@ -1,10 +1,8 @@
 use clap::{Arg, ArgMatches, Command};
-use mdbook::errors::Error;
-use mdbook::preprocess::{CmdPreprocessor, Preprocessor};
+use mdbook::{errors::Error, preprocess::CmdPreprocessor, preprocess::Preprocessor};
 use mdbook_reading_time::ReadingTime;
 use semver::{Version, VersionReq};
-use std::io;
-use std::process;
+use std::{io, process};
 
 pub fn make_app() -> Command {
     Command::new("reading-time-preprocessor")
@@ -18,8 +16,6 @@ pub fn make_app() -> Command {
 
 fn main() {
     let matches = make_app().get_matches();
-
-    // Users will want to construct their own preprocessor here
     let preprocessor = ReadingTime::new();
 
     if let Some(sub_args) = matches.subcommand_matches("supports") {

@@ -1,7 +1,6 @@
-use mdbook::errors::Error;
-
 use mdbook::{
     book::{Book, Chapter},
+    errors::Error,
     preprocess::{Preprocessor, PreprocessorContext},
     BookItem,
 };
@@ -79,7 +78,7 @@ mod test {
                             "title": "TITLE"
                         },
                         "preprocessor": {
-                            "nop": {}
+                            "reading-time": {}
                         }
                     },
                     "renderer": "html",
