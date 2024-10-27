@@ -18,3 +18,10 @@ This configuration replaces:
 
 - `{{ #word_count }}` with the number of words in the chapter.
 - `{{ #reading_time }}` with reading time, e.g. `9 minutes`.
+
+You can customize the default `200` WPM reading speed like this:
+
+```toml
+[preprocessor.reading-time]
+words-per-minute = 250
+```

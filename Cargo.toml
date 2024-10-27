@@ -1,7 +1,7 @@
 [package]
 authors = ["Pawel Urbanek <contact@pawelurbanek.com>"]
 name = "mdbook-reading-time"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = "mdbook preprocessor that calculates the reading time and word count of each chapter."
 license = "MIT"
@@ -14,6 +14,7 @@ clap = "4.5.20"
 mdbook = "0.4.40"
 semver = "1.0.23"
 serde_json = "1.0.132"
+unicode-segmentation = "1.12.0"
 
 [[bin]]
 name = "mdbook-reading-time"
