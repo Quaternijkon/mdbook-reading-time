@@ -16,6 +16,7 @@ impl ReadingTime {
 }
 
 static WORDS_PER_MINUTE: usize = 200;
+static WORDS_BIAS: usize = 0;
 
 impl Preprocessor for ReadingTime {
     fn name(&self) -> &str {
@@ -35,10 +36,20 @@ impl Preprocessor for ReadingTime {
             WORDS_PER_MINUTE
         };
 
+        let words_bias: usize = if let Some(words_bias) = ctx
+            .config
+            .get("preprocessor.reading-time.words-bias")
+            .and_then(|v| v.as_integer())
+        {
+            words_bias as usize
+        } else {
+            WORDS_BIAS
+        };
+
         let mut book = book;
         book.for_each_mut(|item: &mut BookItem| {
             if let BookItem::Chapter(ref mut chapter) = *item {
-                if let Err(err) = handle_chapter(chapter, words_per_minute) {
+                if let Err(err) = handle_chapter(chapter, words_per_minute, words_bias) {
                     error = Some(err)
                 }
             }
@@ -52,9 +63,9 @@ impl Preprocessor for ReadingTime {
     }
 }
 
-fn handle_chapter(chapter: &mut Chapter, words_per_minute: usize) -> Result<(), Error> {
+fn handle_chapter(chapter: &mut Chapter, words_per_minute: usize, words_bias: usize) -> Result<(), Error> {
     let content = chapter.content.as_str();
-    let word_count = content.unicode_words().count();
+    let word_count = content.unicode_words().count()-words_bias;
     let reading_time = word_count / words_per_minute;
     let minutes = if reading_time == 1 {
         "minute"
